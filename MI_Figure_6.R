@@ -6,7 +6,7 @@
 #
 # Figure caption: Comparison of the estimated posterior support of direct host species transition between subsampled and observed data. The estimated posterior mean probability of each interaction is the posterior probability that a particular transition rate is positive. If this probability is high, then the data strongly support a model in which there is direct pathogen transition between that particular pair of host species. The posterior means were estimated via a Discrete Ancestral Trait Mapping performed in BEAST v2. The ‘Subsampled data’ correspond to three subsets of 10 files where the different isolates found in each species were randomly chosen to be part of the new data set. Subsample A corresponds to isolates sampled from five elk (‘Elk’), five randomly chosen cattle (‘Cattle’), and five randomly chosen deer (‘Deer’); Subsample B corresponds to isolates sampled from five elk, nine cattle, and nine randomly chosen deer; and Subsample C corresponds to isolates sampled from five elk, nine cattle, and twenty four randomly chosen deer. The ‘All data’ correspond to the posterior mean of each host species interaction output by one DATM analysis using all of the observed data, which consists of five elk, twelve cattle, and 117 deer. 
 #
-# (1) Manuscript "Implications for disease management at the wildlife-livestock 
+# (1) Manuscript "Disease management at the wildlife-livestock 
 # interface: using whole-genome sequencing to study the role of elk in Mycobacterium bovis 
 # transmission in Michigan, USA" by L.C.M. Salvador, D.J. O’Brien, M.K. Cosgrove, T.P. Stuber, 
 # A. Schooley, J. Crispell, S. Church, Y.T., Grohn, S. Robbe-Austerman, R.R. Kao
@@ -15,7 +15,7 @@
 # @updated by lcmsalvador, November 2018
 #
 # Input files:
-# 1. Data/MI_Elk_Data_134isolates_Traits_withClades_OnlineVersion.csv
+# 1. Data/MI_Elk_Data_134isolates_Traits_withClades.csv
 # 2. Data/MI_Elk_134isolates_HKY_relExp_extskyline_DTA.xml
 #  
 # # Output directories:
@@ -30,8 +30,8 @@
 # downsampling/downsamplingC/downsampling_run_i/downsampling_run.xml', 1<=i<=10
 # downsampling/downsamplingC/downsampling_run_i/downsampling_run.xml', 1<=i<=10
 #
-# Figures: MI_Figure_6.png
-#          MI_Figure_6.pdf    
+# Figures: Figure_6.png
+#          Figure_6.pdf    
 ####################################################################################
 ######################################################################
 # number of isolates
@@ -47,7 +47,7 @@ ndeer <- 5
 ncattle <-5
 
 # read traits file
-traits <- read.csv('Data/MI_Elk_134isolates_Traits_withClades_OnlineVersion.csv', header=TRUE, sep=",", stringsAsFactors = default.stringsAsFactors())
+traits <- read.csv('Data/MI_Elk_134isolates_Traits_withClades.csv', header=TRUE, sep=",", stringsAsFactors = default.stringsAsFactors())
 df <- traits[, c("ID", "SPECIES")]
 names(df) <- c('Isolate', 'Species')
 deer <- df[df$Species=='DEER',]
@@ -326,7 +326,7 @@ cbPalette <- c("#000000","#808080", "#C0C0C0")
 
 
 # generage png file
-png(file="Figure6.png", width=7, height=4.5, units="in", res=300)
+png(file="Figure_6.png", width=7, height=4.5, units="in", res=300)
 ggplot(rateIndicators.melt, aes(x=interaction, y=mean, fill = data)) + 
   geom_boxplot()+
   scale_x_discrete(name = "Symmetric transition between host species") +
@@ -341,7 +341,7 @@ dev.off()
 
 
 # generage pdf file
-pdf(file="Figure6.pdf", width=7, height=4.5)
+pdf(file="Figure_6.pdf", width=7, height=4.5)
 ggplot(rateIndicators.melt, aes(x=interaction, y=mean, fill = data)) + 
   geom_boxplot()+
   scale_x_discrete(name = "Symmetric transition between host species") +
