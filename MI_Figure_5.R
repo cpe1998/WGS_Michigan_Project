@@ -17,7 +17,7 @@
 # ‘Observed data’ correspond to the posterior mean of each interaction using 
 # the observed data. 
 #
-# (1) Manuscript "Implications for disease management at the wildlife-livestock 
+# (1) Manuscript "Disease management at the wildlife-livestock 
 # interface: using whole-genome sequencing to study the role of elk in Mycobacterium bovis 
 # transmission in Michigan, USA" by L.C.M. Salvador, D.J. O’Brien, M.K. Cosgrove, T.P. Stuber, 
 # A. Schooley, J. Crispell, S. Church, Y.T., Grohn, S. Robbe-Austerman, R.R. Kao
@@ -26,7 +26,7 @@
 # @updated by lcmsalvador, November 2018
 #
 # Input files:
-# 1. Data/MI_Elk_Data_134isolates_Traits_withClades_OnlineVersion.csv
+# 1. Data/MI_Elk_Data_134isolates_Traits_withClades.csv
 # 2. Data/MI_Elk_134isolates_HKY_relExp_extskyline_DTA.xml
 #  
 # Output directory: 
@@ -57,7 +57,7 @@ nisol <- 134
 n <- 10
 
 # read traits file
-traits <- read.csv('Data/MI_Elk_134isolates_Traits_withClades_OnlineVersion.csv', header=TRUE, sep=",", stringsAsFactors = default.stringsAsFactors())
+traits <- read.csv('Data/MI_Elk_134isolates_Traits_withClades.csv', header=TRUE, sep=",", stringsAsFactors = default.stringsAsFactors())
 species <- traits[, "SPECIES"]
 
 indexes <- c(1:n)
