@@ -1,7 +1,7 @@
 ###################################################################################
 # Code that generates Supporting Information Figures S2 to S7 of manuscript in (1).
 #
-# (1) Manuscript "Implications for disease management at the wildlife-livestock 
+# (1) Manuscript "Disease management at the wildlife-livestock 
 # interface: using whole-genome sequencing to study the role of elk in Mycobacterium bovis 
 # transmission in Michigan, USA" by L.C.M. Salvador, D.J. O’Brien, M.K. Cosgrove, T.P. Stuber, 
 # A. Schooley, J. Crispell, S. Church, Y.T., Grohn, S. Robbe-Austerman, R.R. Kao
@@ -22,12 +22,12 @@
 # randomized tip labels (in black).
 #
 # Input files for RandomCluster:
-# 1. MI_Elk_134isolates_Traits_withClades_OnlineVersion.csv
+# 1. MI_Elk_134isolates_Traits_withClades.csv
 # 2. MI_Elk_extra_isolates_HKY_relExp_extskyline_DTA.xml
 #  
 # Output files: MI_SequencesRep"i".xml, 1<=i<=20
-# MI_FigureS2.pdf
-# MI_FigureS2.png
+# FigureS2.pdf
+# FigureS2.png
 # 
 # 
 ###########################################################################
@@ -48,7 +48,7 @@ cattle_elk <- 0.391
 deer_elk <- 0.989
 
 # read traits file
-traits <- read.csv('Data/MI_Elk_134isolates_Traits_withClades_OnlineVersion.csv', header=TRUE, sep=",", stringsAsFactors = default.stringsAsFactors())
+traits <- read.csv('Data/MI_Elk_134isolates_Traits_withClades.csv', header=TRUE, sep=",", stringsAsFactors = default.stringsAsFactors())
 
 # retrieving year
 id <- as.character(traits$ID)
@@ -135,7 +135,7 @@ data_summary <- function(data, varname, groupnames){
   return(data_sum)
 }
 
-pdf(file="MI_FigureS2.pdf", width=7, height=5)
+pdf(file="FigureS2.pdf", width=7, height=5)
 p<- ggplot(df2, aes(x=i, y=rate)) + 
   geom_pointrange(aes(ymin=rate-sd, ymax=rate+sd, color=data)) +
   scale_fill_grey() + 
@@ -148,7 +148,7 @@ print(p)
 dev.off()
 
 
-png(file="MI_FigureS2.png", width=7, height=5, units="in", res=300)
+png(file="FigureS2.png", width=7, height=5, units="in", res=300)
 p<- ggplot(df2, aes(x=i, y=rate)) + 
   geom_pointrange(aes(ymin=rate-sd, ymax=rate+sd, color=data)) +
   scale_fill_grey() + 
@@ -208,7 +208,7 @@ dev.off()
 # year.
 #
 # Input file: Data/Beast_runs_combined.log
-# Output file: MI_Figure_S4.png
+# Output file: Figure_S4.png
 ###########################################################################
 
 nSites <- 391
@@ -221,7 +221,7 @@ table <- read.table("Data/Beast_runs_combined.log", header=TRUE, skip=2)
 # Convert the per site value into a per genome nSites <-
 table$GenomeClockRate <- table$ucedMean.MI_Elk_Data_134isolates391snps * nSites
 
-png(file="MI_FigureS4.png", width=5, height=5, units="in", res=300)
+png(file="FigureS4.png", width=5, height=5, units="in", res=300)
 h<-hist(table$GenomeClockRate, breaks = 100, xlab="Estimated evolutionary rate \n (substitution/genome/year)")
 
 cuts <- cut(h$breaks, c(-Inf, lower, upper,Inf))
@@ -257,7 +257,7 @@ dev.off()
 #
 # Input files:
 # 1. Data/MI_Elk_Data_134isolates391snps.nexus
-# 2. Data/MI_Elk_134isolates_Traits_withClades_OnlineVersion.csv
+# 2. Data/MI_Elk_134isolates_Traits_withClades.csv
 # 
 # Output files: Figure_S5.png, Figure_S6.png
 # 
@@ -361,7 +361,7 @@ e1 <- gsub("cattle-cattle", paste0("cattle-cattle\n", as.character(N[N$Var.1=="c
 a$interaction2 <- gsub("cattle-elk", paste0("cattle-elk\n", as.character(N[N$Var.1=="cattle-elk",]$value)), e1)
 
 
-png(file="MI_Figure_S5.png", width=12,height=8.5,units="in",res=300)
+png(file="Figure_S5.png", width=12,height=8.5,units="in",res=300)
 n <- dim(a)[1]
 a[n+1, c(1:4)] <- NA
 a[n+1, 5] <- "cattle-elk\n0"
@@ -402,7 +402,7 @@ d1 <- gsub("elk-elk", paste0("elk-elk\n", as.character(N[N$Var.1=="elk-elk",]$va
 e1 <- gsub("cattle-cattle", paste0("cattle-cattle\n", as.character(N[N$Var.1=="cattle-cattle",]$value)), d1)
 a$interaction2 <- gsub("cattle-elk", paste0("cattle-elk\n", as.character(N[N$Var.1=="cattle-elk",]$value)), e1)
 
-png(file="MI_Figure_S5.png", width=12,height=8.5,units="in",res=300)
+png(file="Figure_S6.png", width=12,height=8.5,units="in",res=300)
 
 n <- dim(a)[1]
 a[n+1, c(1:3)] <- NA
@@ -451,10 +451,11 @@ dev.off()
 # between cattle and elk.   
 #
 # Input files:
-# 1. Data/MI_Elk_134isolates_Traits_withClades_OnlineVersion.csv
+# 1. Data/MI_Elk_134isolates_Traits_withClades.csv
 # 2. Data/MI_Elk_extra_isolates_HKY_relExp_extskyline_DTA.xml
 # 
-# Output filea: Figure_S5.png, Figure_S6.png
+# Output files: Figure_S7A.png
+#               Figure_S7B.png
 # 
 ###########################################################################
 library("doBy")
@@ -471,7 +472,7 @@ library("reshape")
 nisol <- 134
 
 # read traits file
-traits <- read.csv('Data/MI_Elk_134isolates_Traits_withClades_OnlineVersion.csv', header=TRUE, sep=",", stringsAsFactors = default.stringsAsFactors())
+traits <- read.csv('Data/MI_Elk_134isolates_Traits_withClades.csv', header=TRUE, sep=",", stringsAsFactors = default.stringsAsFactors())
 species <- traits[, "SPECIES"]
 clade123 <- which(traits$Clade!=4)
 deer <- which(species[clade123]=="DEER")
@@ -525,7 +526,7 @@ for (j in 1:length(indexes)){
 nisol <- 134
 
 # read traits file
-traits <- read.csv('Data/Data/MI_Elk_134isolates_Traits_withClades_OnlineVersion.csv', header=TRUE, sep=",", stringsAsFactors = default.stringsAsFactors())
+traits <- read.csv('Data/Data/MI_Elk_134isolates_Traits_withClades.csv', header=TRUE, sep=",", stringsAsFactors = default.stringsAsFactors())
 species <- traits[, "SPECIES"]
 clade123 <- which(traits$Clade!=4)
 deer <- which(species[clade123]=="DEER")
