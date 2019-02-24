@@ -17,19 +17,23 @@
 # clusters will be the number after which within cluster differences become minimal; 
 # here this occurs after ~ 3 clusters.
 #
-# (1) Manuscript "Implications for disease management at the wildlife-livestock 
+# (1) Manuscript "Disease management at the wildlife-livestock 
 # interface: using whole-genome sequencing to study the role of elk in Mycobacterium bovis 
 # transmission in Michigan, USA" by L.C.M. Salvador, D.J. O’Brien, M.K. Cosgrove, T.P. Stuber, 
 # A. Schooley, J. Crispell, S. Church, Y.T., Grohn, S. Robbe-Austerman, R.R. Kao
 # 
-# @developed by Joseph Crispell, November 2018
+# @first version developed by Liliana Salvador, July 2017
+# @second version updated and extended by Joseph Crispell, November 2018
 #
 # Input file:
 # Data/Michigan_sequence_traits_with_clades.csv  
 #  
 # Output file: 
-# MI_Figure3.pdf
+# Figure_3.pdf
 # 
+####################################################################################
+#### Load libraries ####
+
 ####################################################################################
 #### Load libraries ####
 
@@ -37,23 +41,20 @@ library(contoureR)
 
 #### Load data ####
 
-# Read in the data 
-# Note: Modified from the original file; Data about farms id and spatial positions 
-# were deleted
-
-file <- "Data/MI_Elk_Data_134isolates_traits_withClades_v3.csv"
+# Read in the data
+file <- "Data/MI_Elk_Data_134isolates_traits_withClades.csv"
 table <- read.table(file, header=TRUE, sep=",")
 
 #### Examine spatial clustering ####
 
 # Open the pdf
-pdf("MI_Figure3.pdf")
+pdf("Figure_3.pdf")
 
 # Set the plotting dimensions
 par(mfrow=c(2,2))
 
 # Define colours for the clusters 
-colours <- c(rgb(1,0,0, 0.75), rgb(0,1,0, 0.75), rgb(0,0,1, 0.75), rgb(0,0,0, 0.75))
+colours <- c("#008B8B", "#8B008B", "#8B8B00")
 table$Colour <- colours[table$Clade]
 
 # Plot the locations and colour by clade
@@ -176,16 +177,16 @@ plotDifferences <- function(differences, differencesPermutedClades){
     
     # Plot the points from BEFORE permutating the clades
     bounds <- quantile(differences[, column], probs=c(0.025, 0.975))
-    points(x=c(i-0.15, i-0.15), y=c(bounds[1], bounds[2]), type="l", col="red", lwd=3)
-    points(x=c(i-0.1, i-0.2), y=c(bounds[1], bounds[1]), type="l", col="red", lwd=3)
-    points(x=c(i-0.1, i-0.2), y=c(bounds[2], bounds[2]), type="l", col="red", lwd=3)
+    points(x=c(i-0.15, i-0.15), y=c(bounds[1], bounds[2]), type="l", col="#FF8C00", lwd=3)
+    points(x=c(i-0.1, i-0.2), y=c(bounds[1], bounds[1]), type="l", col="#FF8C00", lwd=3)
+    points(x=c(i-0.1, i-0.2), y=c(bounds[2], bounds[2]), type="l", col="#FF8C00", lwd=3)
     points(x=i-0.15, y=median(differences[, column]), pch=19)
     
     # Plot the points from AFTER permutating the clades
     bounds <- quantile(differencesPermutedClades[, column], probs=c(0.025, 0.975))
-    points(x=c(i+0.15, i+0.15), y=c(bounds[1], bounds[2]), type="l", col="blue", lwd=3)
-    points(x=c(i+0.1, i+0.2), y=c(bounds[1], bounds[1]), type="l", col="blue", lwd=3)
-    points(x=c(i+0.1, i+0.2), y=c(bounds[2], bounds[2]), type="l", col="blue", lwd=3)
+    points(x=c(i+0.15, i+0.15), y=c(bounds[1], bounds[2]), type="l", col="#4682B4", lwd=3)
+    points(x=c(i+0.1, i+0.2), y=c(bounds[1], bounds[1]), type="l", col="#4682B4", lwd=3)
+    points(x=c(i+0.1, i+0.2), y=c(bounds[2], bounds[2]), type="l", col="#4682B4", lwd=3)
     points(x=i+0.15, y=median(differencesPermutedClades[, column]), pch=19)
   }
   
@@ -196,7 +197,7 @@ plotDifferences <- function(differences, differencesPermutedClades){
   mtext("B", side=3, line=1, at=axisLimits[1], cex=2.5)
   
   # Add a legend
-  legend("top", legend=c("Before permutation", "After permutation"), text.col=c("red", "blue"), bty="n")
+  legend("top", legend=c("Before permutation", "After permutation"), lty=c(1,1), lwd=c(2,2), col=c("#FF8C00", "#4682B4"), bty="n")
 }
 
 calculateDistancesBetweenRandomSamples <- function(table, nComparisons=100, permute=FALSE){
@@ -244,4 +245,5 @@ calculateDistancesBetweenRandomSamples <- function(table, nComparisons=100, perm
 euclideanDistance <- function(x1, y1, x2, y2){
   return(sqrt(sum((x1 - x2)^2 + (y1 - y2)^2)))
 }
+
 
