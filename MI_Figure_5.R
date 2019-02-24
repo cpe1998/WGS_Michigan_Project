@@ -35,8 +35,8 @@
 # output files:
 # random_runs/random_run_i.xml, 1<=i<=n
 # 
-# figures: MI_Figure_5.pdf
-#         MI_Figure_5.png
+# figures: Figure_5.pdf
+#          Figure_5.png
 ####################################################################################
 
 install.packages("doBy")
@@ -124,7 +124,7 @@ point <- data.frame(variable = c("Cattle-Deer", "Cattle-Elk", "Deer-Elk"), value
 names(point) <- c("interaction", "value")
 
 # Create png file
-png(file="MI_Figure5.png", width=7, height=5, units="in", res=300)
+png(file="Figure5.png", width=7, height=5, units="in", res=300)
 ggplot(rateIndicators.melt, aes(x=interaction, y=value, fill = interaction)) + 
   geom_boxplot()+scale_fill_grey() + theme_classic() +
   annotate("text", x = point$interaction, y = point$value-0.01, label = "*", color="darkred", size=12)+
@@ -132,7 +132,7 @@ ggplot(rateIndicators.melt, aes(x=interaction, y=value, fill = interaction)) +
 dev.off()
 
 # Create pdf file
-pdf(file="MI_Figure5.pdf", width=7, height=5)
+pdf(file="Figure5.pdf", width=7, height=5)
 ggplot(rateIndicators.melt, aes(x=interaction, y=value, fill = interaction)) + 
   geom_boxplot()+scale_fill_grey() + theme_classic() +
   annotate("text", x = point$interaction, y = point$value-0.01, label = "*", color="darkred", size=12)+
